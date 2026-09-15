@@ -12,22 +12,37 @@ const router = Router();
 ]; */
 
 
-/* Crear un usuario */
+/* Crear uno o varios usuarios */
 router.post('/', async(req, res)=> {
-    /* extraer del body los datos */
-    let {first_name, last_name, email} = req.body;
+    try{
+        /* si envian un array, creamos varios usuarios */
+        if(Array.isArray(req.body)){
+            let users = req.body;
+            let invalid = users.some(u => !u.first_name || !u.last_name || !u.email);
+            if(invalid) return res.send({status:"error", error:"Campos incompletos en uno o más usuarios"});
 
-    /* si no nos envian los datos marca error */
-    if(!first_name || !last_name || !email) return res.send({status:"error", error:"Campos incompletos"});
+            let result = await userModel.insertMany(users, {ordered:false});
+            return res.send({status:"success", payload:result});
+        }
 
-    /* creamos el usuario */
-    let result = await userModel.create({
-        first_name,
-        last_name,
-        email
-    });
+        /* extraer del body los datos */
+        let {first_name, last_name, email} = req.body;
 
-    res.send({status:"success", payload:result})
+        /* si no nos envian los datos marca error */
+        if(!first_name || !last_name || !email) return res.send({status:"error", error:"Campos incompletos"});
+
+        /* creamos el usuario */
+        let result = await userModel.create({
+            first_name,
+            last_name,
+            email
+        });
+
+        res.send({status:"success", payload:result})
+    }
+    catch(error){
+        res.status(500).send({status:"error", error:error.message})
+    }
 })
 
 
