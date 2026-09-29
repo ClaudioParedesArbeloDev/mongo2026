@@ -4,16 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{{Title}}}</title>
+    <!-- tailwind desde el CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <header class="header" style="display: flex;" >
-        <li style="list-style: none; padding: 10px;">Home</li>
-        <li style="list-style: none; padding: 10px;">Products</li>
-        <li style="list-style: none; padding: 10px;">About</li>
-        <li style="list-style: none; padding: 10px;">Contact</li>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <header class="bg-slate-900 text-white shadow">
+        <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+            <a href="/" class="text-lg font-bold tracking-wide">Mongo<span class="text-emerald-400">App</span></a>
+            <ul class="flex gap-1 text-sm">
+                <li><a href="/" class="rounded-md px-3 py-2 hover:bg-slate-700">Home</a></li>
+                <li><a href="#" class="rounded-md px-3 py-2 hover:bg-slate-700">Products</a></li>
+                <li><a href="#" class="rounded-md px-3 py-2 hover:bg-slate-700">About</a></li>
+                <li><a href="#" class="rounded-md px-3 py-2 hover:bg-slate-700">Contact</a></li>
+            </ul>
+        </nav>
     </header>
-    {{{Mensaje}}}
-    {{{body}}}
-    
+
+    <main class="mx-auto max-w-5xl px-4 py-8">
+        {{{Mensaje}}}
+        {{{body}}}
+    </main>
 </body>
 </html>

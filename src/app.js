@@ -19,6 +19,7 @@ import path from 'path'
 /* importando las rutas */
 import usersRoutes from './routes/users.routes.js';
 import viewsRoutes from './routes/views.routes.js'
+import cookiesRoutes from './routes/cookies.routes.js'
 
 
 /* leemos el archivo .env */
@@ -43,42 +44,22 @@ const PASSWORDDB = process.env.PASSWORDDB;
 //le decimos que vamos a recibir informacion en JSON
 app.use(express.json());
 
-/* //le decimos que vamos a recibir codificado de url
-app.use(express.urlencoded({extended:true})) */
+//le decimos que vamos a recibir codificado de url
+app.use(express.urlencoded({extended:true}))
 
 //usamos cookieParser
 app.use(cookieParser("cursosecreto"));
 
-app.get('/setCookie', (req, res) =>{
-    res.cookie('CodeCookie', 'esta es una cookie muy poderosa',{signed:true}).send("CookieBack")
-})
-
-app.get('/getCookie', (req, res) =>{
-    res.send(req.cookies)
-})
-
-app.get('/getSignedCookie', (req, res) => {
-    res.send(req.signedCookies)
-})
-
-app.get('/deleteCookie', (req, res) => {
-    res.clearCookie('CodeCookie').send("Cookie Eliminada")
-})
-
-
-
-
-
 /* Rutas */
-/* app.use('/api/users', usersRoutes);
-app.use('/', viewsRoutes); */
+app.use('/api/users', usersRoutes);
+app.use('/api/cookies', cookiesRoutes);
+app.use('/', viewsRoutes);
 
 //handlebars
-/* app.engine('handlebars', engine());
+app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'))
 app.use('/static', express.static('public'));
- */
 
 //mongoose
 mongoose.set("strictQuery", true);
